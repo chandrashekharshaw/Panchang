@@ -4,13 +4,13 @@
 
 The installation procedure depends on the base operating system:-
 
-	Linux(Fedora, CentOS, RHEL) System
-     	----------------------------------
+Linux(Fedora, CentOS, RHEL) System
+----------------------------------
 
-	If you have AMP stack (apache, mysql, php) running on your system then follow the 
-	following steps:-
+If you have AMP stack (apache, mysql, php) running on your system then
+follow the following steps:-
 
-	1) Create a directory named "calendar" inside the apache root directory.
+1) Create a directory named "calendar" inside the apache root directory.
 	2) Copy the content of "src" directory to newly created directory "calendar".
 	3) Run the script mysql_schema.sh to create the required database schema. 
 		$ ./mysql_schema.sh
@@ -53,7 +53,9 @@ The installation procedure depends on the base operating system:-
 	
 	Access Panchang by opening the link : 
 	
-		   http://localhost/calendar/index.php or http://SERVERNAME/calendar/index.php
+			http://localhost/calendar/index.php 
+					or 
+			http://SERVERNAME/calendar/index.php
 	--------------------------------------------------------------------------------------
 
 	NOTE: 3rd party open source packages and codes which have been used to support this
