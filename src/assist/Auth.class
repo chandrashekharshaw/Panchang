@@ -1,0 +1,290 @@
+<?php
+//+---------------------------------------------------------------------------------------------------------------------------------+
+//                                                                                                                                  /
+// Copyright (c) 2012 Yahoo! Inc. All rights reserved.                                                                              /
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this                                             /
+// file except in compliance with the License. You may obtain a copy of the License at                                              /
+//                                                                                                                                  /
+//              http://www.apache.org/licenses/LICENSE-2.0                                                                          /
+//                                                                                                                                  /
+// Unless required by applicable law or agreed to in writing, software distributed under                                            /
+// the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF                                              /
+// ANY KIND, either express or implied. See the License for the specific language governing                                         /
+// permissions and limitations under the License. See accompanying LICENSE file.                                                    /
+//                                                                                                                                  /
+// $Author:shawcs@yahoo-inc.com  $Date: 30-Jan-2012                                                                                 /
+//                                                                                                                                  /
+//+---------------------------------------------------------------------------------------------------------------------------------+
+
+DEFINE("__DEBUG", 1);
+
+Class Auth {
+
+  /**
+   * username (Yahoo! user ID)
+   * @access private
+   * @var string
+   */
+  public $username;
+
+  /**
+   * OpsDB PEAR connector
+   * @access private
+   * @var resource
+   */
+  protected $_db_ops;
+
+  // {{{ Auth()
+  // +-------------------------------------------------------------------------+
+  // | Auth(): constructor. Inits class variables. Allso checks to see if the  |
+  // | user has set their preferences. If they didn't, it redirects them to    | 
+  // | the OpsDB preferances page. It does remember the ref page to it will    |
+  // | bounce them back after.                                                 |
+  // | @param integer -- reference to OpsDB PEAR connector                     |
+  // | @param string  -- Yahoo! user ID                                        |
+  // +-------------------------------------------------------------------------+
+  function Auth(&$db_ops, $username="")
+  {
+    // set username :
+    $this->_db_ops = $db_ops;
+    $env_byuser = $username;
+    
+    if (strlen(trim($username))) {
+      $this->username = $username;
+    } else {
+      $this->username = $env_byuser;
+    } 
+    // username must be present :
+    if (!strlen($this->username)) {
+      die('Auth.class::Auth():' . __LINE__ . ': no username!');
+    }
+  } // eo constructor
+  // }}}
+
+  // +-------------------------------------------------------------------------+
+  // | public isGroupMember(): determines whether the user is a member of      |
+  // | (opsdb) group. See 'OpsDB User Groups' for more info on groups.         |
+  // |   @param mix $group -- group id (int) or group name (string)            |
+  // |   @param boolean $check_e_time -- whether we should check for exp date  |
+  // |   @return boolean true is the user is a member of a groip               |
+  // +-------------------------------------------------------------------------+
+  function isGroupMember($group, $check_e_time = true)
+  {
+    // check for expiration date if needed :
+    if ($check_e_time) {
+      $ands .= " AND guu.e_time > UNIX_TIMESTAMP(NOW())";
+    }
+    // get the result :
+    $query = "SELECT COUNT(*) FROM groupUser_user AS guu
+      LEFT JOIN groupUser AS gu ON (guu.gu_id = gu.gu_id)
+      LEFT JOIN user ON (guu.user_id = user.user_id)
+      WHERE guu.gu_id = " . $this->getGroupID($group) . " AND user.username = " .
+      $this->_db_ops->quote($this->username) . $ands;
+    $count =& $this->_db_ops->getOne($query);
+    // html_debug($query);
+    if (is_numeric($count) && $count == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  } // eo isGroupMember() method
+
+  // +-------------------------------------------------------------------------+
+  // | public isGroupAdmin(): checks whether user is a group admin             |
+  // |   @param mix $group -- group id (int) or group name (string)            |
+  // |   @param boolean $check_e_time -- whether we should check for exp date  |
+  // |   @return boolean true is the user is an admin                          |
+  // +-------------------------------------------------------------------------+
+  function isGroupAdmin($group, $check_e_time = true)
+  {
+    // check for expiration date if needed :
+    if ($check_e_time) {
+      $ands .= " AND guu.e_time > UNIX_TIMESTAMP(NOW())";
+    }
+    $query = "SELECT guu.is_admin FROM groupUser_user AS guu
+      LEFT JOIN user ON (guu.user_id = user.user_id)
+      WHERE guu.gu_id = " . $this->getGroupID($group) . " AND user.username = " .
+      $this->_db_ops->quote($this->username) . $ands;
+    $is_admin = $this->_db_ops->getOne($query);
+    // html_debug($query);
+    if (is_numeric($is_admin) && $is_admin == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  } // eo isGroupAdmin() method
+
+  // +-------------------------------------------------------------------------+
+  // | public isGroupOwner(): checks whether user is a group owner             |
+  // |   @param mix $group -- group id (int) or group name (string)            |
+  // |   @return boolean true is the user is a group owner                     |
+  // +-------------------------------------------------------------------------+
+  function isGroupOwner($group)
+  {
+    $query = "SELECT user.username FROM groupUser AS gu
+      LEFT JOIN user ON (gu.user_id = user.user_id) WHERE gu_id = " . $this->getGroupID($group);
+    $group_owner = $this->_db_ops->getOne($query);
+    // html_debug($query);
+    if (strlen(trim($group_owner)) && $group_owner == $this->username) {
+      return true;
+    } else {
+      return false;
+    }
+  } // eo isGroupOwner() method
+
+  // +-------------------------------------------------------------------------+
+  // | public isSuperuser(): checks whether user is a 'superuser', i.e. he     |
+  // | belongs to at least one administrative group listed below.              |
+  // |   @return boolean true is the user is a superuser, false otherwise      |
+  // +-------------------------------------------------------------------------+
+  function isSuperuser()
+  {
+    $super_groups = array("opsdb_ynoc", "opsdb_admins");
+    foreach ($super_groups as $super_group) {
+      if ($this->isGroupMember($super_group)) {
+        return true;
+      }
+    }
+    return false;
+  } // eo isSuperuser() method
+
+  // +-------------------------------------------------------------------------+
+  // | public getGroupID() : gets user group ID based on user group name       |
+  // |   @param mix $group -- group id (int) or group name (string)            |
+  // |   @return integer group id, 0 if group doesn't exist                    |
+  // +-------------------------------------------------------------------------+
+  function getGroupID($group)
+  {
+    // it's NOT a static method, check that username was inited :
+    if (!strlen($this->username)) {
+      exit("Auth::isGroupMember():" . __FILE__ . ":" . __LINE__ . ": no username!");
+    }
+    // cut off '@yahoo-inc.com' if needed :
+    if (strstr($group, "@yahoo-inc.com")) {
+      $group = str_replace("@yahoo-inc.com", "", $group);
+    }
+    // get group id by group name if needed :
+    if (!is_numeric($group)) {
+      $gu_id = $this->_db_ops->getOne("SELECT gu_id FROM groupUser WHERE name = " . $this->_db_ops->quote($group));
+    } else {
+      $gu_id = $group;
+    }
+    // make sure we have group id :
+    if (is_numeric($gu_id)) {
+      return $gu_id;
+    } else {
+      return 0;
+    }
+  } // eo getGroupID() method
+
+  // +-------------------------------------------------------------------------+
+  // | public getUserID() : gets user ID based on username                     |
+  // |   @param mix $user -- user id (int) or user name (string)               |
+  // |   @return integer user id, 0 if user doesn't exist                      |
+  // +-------------------------------------------------------------------------+
+  function getUserID($user, $status=FALSE)
+  {
+    // it's NOT a static method, check that username was inited :
+    if (!strlen($this->username)) {
+      exit("Auth::isGroupMember():" . __FILE__ . ":" . __LINE__ . ": no username!");
+    }
+    // cut off '@yahoo-inc.com' if needed :
+    if (strstr($user, "@yahoo-inc.com")) {
+      $user = str_replace("@yahoo-inc.com", "", $user);
+    }
+    if($status) {
+      // get user id by user name if needed :
+      if (!is_numeric($user)) {
+        $user_id = $this->_db_ops->getRow("SELECT user_id, is_active FROM user WHERE username = " . $this->_db_ops->quote($user));
+      } else {
+        $user_id = $this->_db_ops->getRow("SELECT user_id, is_active FROM user WHERE user_id = " . $this->_db_ops->quote($user));
+      }
+      // make sure we have user id :
+      if (is_numeric($user_id['user_id'])) {
+        return $user_id;
+      } else {
+        return 0;
+      }
+    } else {
+      // get user id by user name if needed :
+      if (!is_numeric($user)) {
+        $user_id = $this->_db_ops->getOne("SELECT user_id FROM user WHERE username = " . $this->_db_ops->quote($user));
+      } else {
+        $user_id = $user;
+      }
+      // make sure we have user id :
+      if (is_numeric($user_id)) {
+        return $user_id;
+      } else {
+        return 0;
+      }
+    }
+  } // eo getUserID () method
+
+  // +-------------------------------------------------------------------------+
+  // | public getGroupName() : Gets the group name from a group id. Returns    |
+  // |                       '' if it doesn't exist.                           |
+  // +-------------------------------------------------------------------------+
+  function getGroupName($group_id)
+  {
+    $name = '';
+    // get group id by group name if needed :
+    if (is_numeric($group_id)) {
+      $name = $this->_db_ops->getOne("SELECT name FROM groupUser WHERE gu_id = " . $this->_db_ops->quotesmart($group_id));
+    }
+    return $name;
+  } // eo getGroupName() method
+
+  // +-------------------------------------------------------------------------+
+  // | public getUserName() : Gets username from a user_id.                    |
+  // | param:                                                                  |
+  // |    $user_id          : numeric user_id from OpsDB                       |
+  // |    $status           : boolean. true if status of user is also required |
+  // | Returns                                                                 |
+  // |    (string) username ('' if it doesn't exist) if $status=FALSE          |
+  // |    array('username'=>username, 'is_active'=>status) if $status=TRUE     |
+  // +-------------------------------------------------------------------------+
+  function getUserName($user_id, $status=FALSE)
+  {
+    if($status) {
+      $name = array();
+      if (is_numeric($user_id)) {
+        $name = $this->_db_ops->getRow("SELECT username, is_active FROM user WHERE user_id = " . $this->_db_ops->quotesmart($user_id));
+      }
+      return $name;
+    } else {
+      $name = '';
+      // get group id by group name if needed :
+      if (is_numeric($user_id)) {
+        $name = $this->_db_ops->getOne("SELECT username FROM user WHERE user_id = " . $this->_db_ops->quotesmart($user_id));
+      }
+      return $name;
+    }
+  } // eo getGroupName() method
+
+  /**
+   * &getUserRecord() get user's record including role
+   * @param str username
+   * @return int ref to the array (user record) if found, false otherwise
+   */
+  function &getUserRecord($username = NULL) {
+    if (is_null($username)) {
+      $username = $this->username;
+    }
+    $usr_rec =& $this->_db_ops->getRow(
+      "select user.username, user.name, user.email from " .
+      "user where user.username =" .
+      $this->_db_ops->quote($username));
+    if ($this->_db_ops->isError($usr_rec)) {
+      return $usr_rec;
+    } else {
+      return false;
+    }
+  } // eo getUserRecord() function
+
+  public function setDB(&$db) {
+    $this->_db_ops = $db;
+  }
+} // eo Auth() class
+
+?>

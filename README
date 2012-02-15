@@ -1,0 +1,74 @@
+			Panchang (People on Duty)
+			-------------------------
+		 ~~~~~~ Installation Instruction ~~~~~~~
+
+The installation procedure depends on the base operating system:-
+
+	Linux(Fedora, CentOS, RHEL) System
+     	----------------------------------
+
+	If you have AMP stack (apache, mysql, php) running on your system then follow the 
+	following steps:-
+
+	1) Create a directory named "calendar" inside the apache root directory.
+	2) Copy the content of "src" directory to newly created directory "calendar".
+	3) Run the script mysql_schema.sh to create the required database schema. 
+		$ ./mysql_schema.sh
+
+	Else if you want to install this package from scratch on fresh operating system
+	then start installing with these steps:-
+
+	1) Run the script install.sh which will install and configure the AMP server then
+	   install this package on proper position.
+		$ ./install_Linux.sh
+	2) Run the script mysql_schema.sh to create the required database schema.
+		$ ./mysql_schema.sh
+
+
+	Mac OSX
+	-------
+	
+	Mac OSX already comes with Apache installed and PHP bundled up with it. By default 
+	both are inactive and require us to get them ready for business. This can be achieved
+	by following simple steps:
+	
+	1) Run the script install_Mac.sh which will set up the Apache server with PHP support.
+		$ ./install_Mac.sh
+
+	2) Create a directory named "calendar" inside the apache root directory.
+	
+	3) Copy the content of "src" directory to newly created directory "calendar".
+	
+	4) Download the MySQL package for Mac OSX depending on the base machine from-
+		http://dev.mysql.com/downloads/mysql/5.1.html#macosx-dmg
+
+	5) Install everything in the package in this order: mysql, the startup item, the
+	   preference pane. Run this command 
+		export PATH=${PATH}:/usr/local/mysql/bin/
+
+	6) Run the script mysql_schema.sh to create the required database schema.
+		$ ./mysql_schema.sh
+
+
+	
+	Access Panchang by opening the link : 
+	
+		   http://localhost/calendar/index.php or http://SERVERNAME/calendar/index.php
+	--------------------------------------------------------------------------------------
+
+	NOTE: 3rd party open source packages and codes which have been used to support this
+	package along with their download location :- 
+
+	* Apache web server 	:http://httpd.apache.org/download.cgi 
+	* PHP			:http://in.php.net/distributions/		
+	* MySQL			:http://www.mysql.com/downloads/mysql/
+	* PEAR			:http://pear.php.net/package/PEAR/download
+	* PEAR-DB		:http://pear.php.net/package/DB/download
+	* DB_DataObject		:http://pear.php.net/package/DB_DataObject/download
+	* YUI Library		:http://developer.yahoo.com/yui/
+	* Jquery		:http://code.jquery.com/jquery-1.7.1.js
+	* DHTML calendar JS	:http://www.dynarch.com/projects/calendar/download/
+
+
+
+	------------------------------------------------------------------------------------------

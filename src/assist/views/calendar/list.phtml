@@ -1,0 +1,215 @@
+<!--
+//+---------------------------------------------------------------------------------------------------------------------------------+
+//                                                                                                                                  /
+// Copyright (c) 2012 Yahoo! Inc. All rights reserved.                                                                              /
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this                                             /
+// file except in compliance with the License. You may obtain a copy of the License at                                              /
+//                                                                                                                                  /
+//              http://www.apache.org/licenses/LICENSE-2.0                                                                          /
+//                                                                                                                                  /
+// Unless required by applicable law or agreed to in writing, software distributed under                                            /
+// the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF                                              /
+// ANY KIND, either express or implied. See the License for the specific language governing                                         /
+// permissions and limitations under the License. See accompanying LICENSE file.                                                    /
+//                                                                                                                                  /
+// $Author:shawcs@yahoo-inc.com  $Date: 30-Jan-2012                                                                                 /
+//                                                                                                                                  /
+//+---------------------------------------------------------------------------------------------------------------------------------+
+-->
+<link href="css/calendar/theme.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+tr.hide        { visibility: hidden; display: none; }
+tr.show        { visibility: visible; display: table-row; }
+-->
+</style>
+<div id="myPanel">
+	<div class="hd"></div>
+	<div class="bd"></div>
+	<div class="ft"></div>
+</div>
+<form name='alist' method='post' action='./calendar.php?action=searchLog'>
+<table cellspacing=0 cellpadding=0 border=0 width=962>
+<tr><td>&nbsp;</td></tr>
+<tr>
+  <td><span class="title"><?php echo $this->pagetitle?></span></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td>
+<table width=962 border=0 cellpadding=0>
+<tr><td>
+<div id="contenttab">
+<ul>
+<li id='oncall'><a href="./calendar.php?action=storageCalendar">Oncall Ticket Assignee</a></li>
+<li id='log'><a href="./calendar.php?action=ticketLog">Ticket Log</a></li>
+<li id='search' class="selected"><a href="./calendar.php?action=searchLog">Search Log</a></li>
+</ul>
+</div>
+</td></tr>
+</table>
+</td></tr>
+<tr><td>&nbsp;</td></tr>
+
+<tr><td>
+<div id="yopsbox" class="chunk">
+      <div class="rc_top">
+      <div class="rc_tl_clean"></div>
+      <div class="rc_tr_clean"></div>
+      </div>
+      <div class="dsply">
+	<table width="100%"  border="0" cellspacing="0" cellpadding="0">
+		<tr><td align="left" valign="top">
+			<table width="100%"  border="0" cellpadding="0" cellspacing="0">
+
+			    <tr>
+			      <td height="10" colspan="5"></td>
+			    </tr>
+			    <tr>
+				<td>&nbsp;</td>
+				<td><a href="javascript:void(0);" onmouseout="off();" onmouseover="pop('User Name');"><img src="images/icons/icon_info.gif" border="0" width="15" height="16" /></a></td>
+				<td>&nbsp;</td>
+				<td align="left" nowrap="nowrap"><span class="text_purple_bold">User Name</span></td>
+				<td>
+			<input name="search" id="search" type="text" style="width:180px;"
+      value="<?php echo $this->search?>" onfocus="if(this.value==' any')this.value='';"
+      onblur="if(this.value=='')this.value=' any';" maxlength="128" />	
+			   </td>
+			   </tr>
+			   <tr><td height="10" colspan="5"></td></tr>
+			    <tr>
+				<td>&nbsp;</td>
+				<td><a href="javascript:void(0);" onmouseout="off();" onmouseover="pop('Oncall time');"><img src="images/icons/icon_info.gif" border="0" width="15" height="16" /></a></td>
+				<td>&nbsp;</td>
+				<td align="left" nowrap="nowrap"><span class="text_purple_bold">Oncall Time</span></td>
+				<td>
+				<select name='timezone' id='timezone' width='120px'>
+				<option value=-1>--any--</option>
+				<?php
+					foreach($this->times as $time) {
+					$selected = ($time[timezone_id]==$this->timezone)?" selected":'';
+				?>
+					<option value="<?php echo $time[timezone_id]?>" <?php echo $selected?>><?php echo $time[timezone]?></option>
+				<?php
+				}
+				?>
+				</select>
+			        </td>
+			   </tr>
+			   <tr><td height="10" colspan="5"></td></tr>
+ 			<?php
+				if($this->caltype==0) {
+				?>
+				<script langauge='javascript'>
+					document.getElementById('timezone').value=-1;
+					document.getElementById('timezone').disabled=true;
+				</script>
+				<?php
+				}
+				?>
+		
+  		        </table>
+		</td>
+		<td width="20" align="center" valign="middle"><img src="images/separator_75.gif" width="7" height="50" /></td>
+		<td align="left" valign="top">
+			<table width="100%"  border="0" cellpadding="0" cellspacing="0">
+			    <tr>
+			      <td height="10" colspan="5"></td>
+			    </tr>
+			    <tr>
+				<td>&nbsp;</td>
+				<td><a href="javascript:void(0);" onmouseout="off();" onmouseover="pop('From Date');"><img src="images/icons/icon_info.gif" border="0" width="15" height="16" /></a></td>
+				<td>&nbsp;</td>
+				<td align="left" nowrap="nowrap"><span class="text_purple_bold">Oncall Starts From</span></td>
+				<td><input name="from_ts" id="from_ts" type="text" value="<?php echo $this->from_ts?>" readonly="1" style="width:140px;" />
+				<a href="javascript:void(0);"><img src="images/pdate.gif" id="from_ts_trigger" width="21" height="19" border="0" align="absmiddle" /></a>
+				  <script type="text/javascript">
+				      Calendar.setup({
+				      inputField : "from_ts",
+				      ifFormat   : "%B %e, %Y",
+				      button     : "from_ts_trigger"
+				      });
+				  </script>
+</td>
+			   </tr>
+		
+			    <tr>
+			      <td height="10" colspan="5"></td>
+			    </tr>
+			    <tr>
+				<td>&nbsp;</td>
+				<td><a href="javascript:void(0);" onmouseout="off();" onmouseover="pop('To Date');"><img src="images/icons/icon_info.gif" border="0" width="15" height="16" /></a></td>
+				<td>&nbsp;</td>
+				<td align="left" nowrap="nowrap"><span class="text_purple_bold">Oncall Ends on</span></td>
+				<td>
+				<input name="to_ts" id="to_ts" type="text" value="<?php echo $this->to_ts?>" readonly="1" style="width:140px;" />
+				<a href="javascript:void(0);"><img src="images/pdate.gif" id="to_ts_trigger" width="21" height="19" border="0" align="absmiddle" /></a>
+				  <script type="text/javascript">
+				      Calendar.setup({
+				      inputField : "to_ts",
+				      ifFormat   : "%B %e, %Y",
+				      button     : "to_ts_trigger"
+				      });
+				  </script>
+				</td>
+			   </tr>
+			   <tr><td height="10" colspan="5"></td></tr>
+  	
+	         </table>
+		</td></tr>
+
+
+	</table>
+
+
+     </div>
+      <div class="rc_bot">
+      <div class="rc_bl"></div>
+      <div class="rc_br"></div>
+      </div>
+      </div>
+    <br />
+                        <div align="right"><input type="submit" name="Search" value="Search" />
+        <input type="reset" name="reset" value="Reset" /></div>  </td>
+
+
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td width=100%>
+<?php
+if( $configs->total > 0 ) { ?>
+
+<?php echo  $this->render_partial('shared/pagination', array('pager' => $configs)) ?>
+
+<table id="result" width=100% cellpadding=5 cellspacing=1>
+  <thead>
+  <tr height=15>
+    <td width=100><strong><?php echo  $this->order_by('oname', $configs->order_by, 'NAME','w_header') ?></strong></td>
+    <td width=80><strong> <?php echo  $this->order_by('username', $configs->order_by, 'USERID','w_header') ?></strong></td>
+ <td width=70><strong> <?php echo  $this->order_by('octype', $configs->order_by, 'OncallType','w_header') ?></td>
+ <td width=70><strong> <?php echo  $this->order_by('timezone', $configs->order_by, 'Timezone','w_header') ?></td>
+  <td width=20><strong> <?php echo  $this->order_by('oncall_from', $configs->order_by, 'From Date','w_header') ?></td>
+  <td width=20><strong> <?php echo  $this->order_by('oncall_to', $configs->order_by, 'To Date','w_header') ?></td>
+  </tr>
+  </thead>
+ <tbody>
+  <?
+     foreach ($configs as $config ) {
+  ?>
+    <tr class='result' onMouseOver="this.style.backgroundColor='#D0D0D0';" onMouseOut="this.style.backgroundColor='#e5dbea';">
+      <td valign=top>&nbsp;&nbsp;<?php echo $config->oname?></td>
+      <td valign=top><?php echo $config->username?></td>
+      <td valign=top><?php echo ($config->octype=='P'?'PRI':'SEC')?></td>
+      <td valign=top><?php echo $config->timezone?></td>
+      <td valign=top><?php echo date("d-m-Y",strtotime($config->oncall_from))?></td>
+ <td valign=top><?php echo date("d-m-Y",strtotime($config->oncall_to))?></td>
+    </tr>
+  <? } ?>
+  </tbody>
+</table>
+
+<? } else { ?>
+<p>&nbsp;No records found.</p>
+<? } ?>
+</td></tr>
+</table>
+</form>

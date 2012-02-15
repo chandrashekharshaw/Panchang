@@ -1,0 +1,105 @@
+#dbbox .dsply {
+	padding: 0 0 5px;
+	font:11px Verdana;
+}
+
+#dbbox .dsply .links {
+	padding: 15px 10px;
+}
+
+#dbbox .dsply .links a {
+	color: #002758;
+	text-decoration: underline;
+}
+
+#dbbox .dsply .links a:hover {
+	text-decoration: underline;
+}
+
+#dbbox .dsply .links a:visited {
+	color: #002758;
+	text-decoration: none;
+	color: #185167;
+}
+
+#dbbox .dsply .links h5 {
+	margin: 0;
+	padding: 0;
+	color: #696969;
+}
+
+#dbbox .dsply .links .yui-dt table{
+  width:100%;
+}
+#dbbox .dsply .links .yui-dt table td{
+  vertical-align:top;
+}
+
+#dbbox .rc_bl {
+	position: absolute;
+	width: 3px;
+	height: 3px;
+	bottom: 0;
+	left: 0;
+	font-size: 0;
+}
+
+#dbbox .rc_bot {
+	width: 100%;
+	position: relative;
+	background-color: #5c099a;
+}
+
+#dbbox .rc_br {
+	position: absolute;
+	width: 3px;
+	height: 3px;
+	bottom: 0;
+	right: 0;
+	font-size: 0;
+}
+
+#dbbox .rc_top {
+	width: 100%;
+	position: relative;
+	z-index: 100;
+	background-color: #5c099a;
+}
+
+#dbbox .rc_tl {
+	position: absolute;
+	width: 3px;
+	height: 3px;
+	top: 0;
+	left: 0;
+	font-size: 0;
+}
+
+#dbbox .rc_tr {
+	position: absolute;
+	width: 3px;
+	height: 3px;
+	top: 0;
+	right: 0;
+	font-size: 0;
+}
+
+#dbbox .rc_tl_clean {
+	position: absolute;
+	width: 3px;
+	height: 3px;
+	top: 0;
+	left: 0;
+	font-size: 0;
+	background: #5c099a url(../images/rc_tl_clean.gif);
+}
+
+#dbbox .rc_tr_clean {
+	position: absolute;
+	width: 3px;
+	height: 3px;
+	top: 0;
+	right: 0;
+	font-size: 0;
+	background: #5c099a url(../images/rc_tr_clean.gif);
+}

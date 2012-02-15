@@ -1,0 +1,337 @@
+/* CSS Document */
+
+ #yopsnav
+	{
+		padding:0px 0px 0px 0px; 
+		clear:both;
+		width:750px;
+		float:left;
+		text-align:left;
+	}
+	
+	#yopsnav ul
+	{
+		margin:0px 0px 0px 0px;
+		padding:0px 0px 0px 4px;
+		list-style:none;
+		height:20px;
+		
+	}
+	
+	#yopsnav ul li
+	{
+		display:block;
+		float:left;
+		background:url(../images/tab-left-off_purple.gif) top left no-repeat;
+		padding:0px 0px 0px 3px;
+		margin:0px 2px 0px 0px;
+		
+	}
+
+	#yopsnav ul li a
+	{
+		display:block;
+		float:left;
+		font:10px Verdana;
+		font-weight:bold;
+		color:#434343;
+		white-space:nowrap;
+		background:url(../images/tab-right-off-wide_purple.gif) top right;
+		padding:4px 6px 4px 6px;
+		margin:0px 0px 0px 0px;
+		text-decoration:none;
+	
+	}
+	
+	#yopsnav ul li.selected
+	{
+		background:url(../images/tab-left-on_purple.gif) top left no-repeat;		
+		padding-left: 3px;
+	}
+
+	#yopsnav ul li.selected a
+	{
+		color:#FFFFFF;
+		text-decoration:none;
+		background:url(../images/tab-right-on-wide_purple.gif) top right;
+		background-repeat:repeat-x;
+		
+	}
+	
+	#yopsnav a:hover
+	{
+		text-decoration:underline;
+	} 
+	
+	/* SUB NAV SECTION */	
+	#yopssubnav
+	{
+		padding:0px 0px 0px 0px;
+		clear:both;
+		float:left;
+		width:100%;
+		margin:0px 0px 0px 0px;
+	}
+
+	#yopssubnav ul
+	{
+		padding:0px 0px 0px 0px;
+		margin:0px 0px 0px 0px;
+		float:left;
+		list-style:none;
+		background:url(../images/tab-subnav-background_purple.gif);
+		width:100%;
+	}
+
+	#yopssubnav ul li 
+	{
+		float:left;
+		display:block;
+		font:10px Verdana;
+		height:25px;
+		margin:0px 0px 0px 0px;
+		padding:0px 0px 0px 0px;
+		background:url(../images/tab-subnav-separator_purple.gif) right no-repeat;		
+	}
+
+
+	#yopssubnav ul li  a
+	{
+		float:left;
+		color:#FFFFFF;
+		font:10px Verdana;
+		white-space:nowrap;
+		text-decoration:none;
+		margin:5px 0px 0px 0px; 
+		padding:0px 9px 0px 9px;
+	}
+
+	#yopssubnav ul li.selected a
+	{
+		font:10px Verdana;
+		font-weight:bold;
+	}
+
+	#yopssubnav a:hover
+	{
+		text-decoration:underline;
+	} 
+
+/* Get Quotes section*/
+
+	#yopssearch
+	{
+		clear:both;
+		float:left;
+		margin:0px 0px 0px 0px;
+		padding:0px 0px 0px 0px;
+		width:100%;
+	}
+
+	#yopssearch ul
+	{
+		margin:0px 0px 0px 0px;
+		list-style:none;
+		width:100%;
+		padding:2px 0px 0px 0px;
+		float:left;
+		background:url(../images/tab-quotebar_purple.gif);
+	}
+
+	#yopssearch ul li
+	{
+		float:left;
+		display:block;
+		font:11px Verdana;
+		font-weight:bold;
+		height:27px;
+		margin:0px 0px 0px 5px;
+	}
+	
+	#yopssearch ul li label
+	{
+		float:left;
+		font:11px Verdana;
+		font-weight:bold;
+		color:#023165;
+		margin-left:130px; 
+		margin-top:6px;
+		margin-right:0px;
+	}	
+
+	#yopssearch ul li input.button
+	{
+		float:left;
+		font:10px Verdana;
+		font-weight:normal;
+		padding:0px 0px 0px 0px;
+		font-weight:bold;
+		margin: 4px 0px 0px 0px;
+	}	
+
+	#yopssearch ul li input.text
+	{
+		float:left;
+		font:10px Verdana;
+		font-weight:normal;
+		padding:0px 0px 0px 0px;
+		margin: 5px 0px 0px 0px;
+	}	
+
+	#yopssearch ul li.first a
+	{
+		float:left;
+		font:10px Verdana;
+		font-weight:normal;
+		color:#333333;
+		border-left:none;
+		margin:7px 0px 0px 0px;
+		padding:0px 0px 0px 0px;
+		
+	}	
+
+	#yopssearch ul li a
+	{
+		float:left;
+		font:10px Verdana;
+		font-weight:normal;
+		color:#333333;
+		border-left:1px double #000000;
+		margin:7px 0px 0px 0px;
+		padding:0px 0px 0px 7px;
+		text-decoration: none;
+	}	
+
+	#yopssearch a:hover
+	{
+		text-decoration:underline;
+	}
+	
+	
+	
+  tr.yopsnavcontext
+	{
+    background:url(../images/tab_context.gif) top right;
+		height:25px;
+		width:138px;
+	}
+
+ td.yopsnavcontext
+	{
+
+	}
+	a.yopsnavcontext
+	{
+		font:10px Verdana;
+		color:#434343;
+		text-decoration:none;
+	}
+
+	
+	tr.yopsnavcontexthead
+	{
+    background:url(../images/tab_context_head.gif) top right;
+		height:25px;
+		
+	}
+
+ td.yopsnavcontexthead
+	{
+		background:url(../images/tab_context_head.gif) top left no-repeat;	
+		height:25px;	
+	}
+	a.yopsnavcontexthead
+	{
+		font:10px Verdana;
+		font-weight:bold;
+		color:#000;
+		text-decoration:none;
+	}
+	
+	tr.yopsnavcontextfoot
+	{
+    background:url(../images/tab_context_bottom.gif) top right;
+		height:2px;
+		
+	}
+
+ td.yopsnavcontextfoot
+	{
+		background:url(../images/tab_context_bottom.gif) top left no-repeat;	
+		height:2px;	
+	}
+
+
+
+
+
+
+
+
+ #contenttab
+	{
+		padding:0px 0px 0px 0px; 
+		clear:both;
+		width:100%;
+		float:left;
+		text-align:left;
+	}
+	
+	#contenttab ul
+	{
+		margin:0px 0px 0px 0px;
+		padding:0px 0px 0px 4px;
+		list-style:none;
+		height:24px;
+		background:url(../images/content_tab_bg.gif);
+		
+	}
+	
+	#contenttab ul li
+	{
+		display:block;
+		float:left;
+		background:url(../images/content_tab_left_off.gif) top left no-repeat;
+		padding:0px 0px 0px 6px;
+		margin:0px 2px 0px 0px;
+		
+	}
+
+	#contenttab ul li a
+	{
+		display:block;
+		float:left;
+		font:10px Verdana;
+		font-weight:bold;
+		color:#777777;
+		white-space:nowrap;
+		background:url(../images/content_tab_right_off.gif) top right no-repeat;
+		padding:4px 6px 4px 6px;
+		margin:0px 0px 0px 0px;
+		text-decoration:none;
+	
+	}
+	
+	#contenttab ul li.selected
+	{
+		background:url(../images/content_tab_left_on.gif) top left no-repeat;		
+		padding:0px 0px 0px 6px;
+		margin:0px 2px 0px 0px;
+		height:24px;
+	}
+
+	#contenttab ul li.selected a
+	{
+	color:#333333;
+	text-decoration:none;
+	background:url(../images/content_tab_right_on.gif) top right;
+	background-repeat:repeat-x;
+	height:24px;
+	}
+	
+	#contenttab a:hover
+	{
+		color:#9933CC;
+	} 
+	
+	fieldset { -moz-border-radius: 8px; border-radius: px; }

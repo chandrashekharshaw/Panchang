@@ -1,0 +1,66 @@
+<!--
+//+---------------------------------------------------------------------------------------------------------------------------------+
+//                                                                                                                                  /
+// Copyright (c) 2012 Yahoo! Inc. All rights reserved.                                                                              /
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this                                             /
+// file except in compliance with the License. You may obtain a copy of the License at                                              /
+//                                                                                                                                  /
+//              http://www.apache.org/licenses/LICENSE-2.0                                                                          /
+//                                                                                                                                  /
+// Unless required by applicable law or agreed to in writing, software distributed under                                            /
+// the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF                                              /
+// ANY KIND, either express or implied. See the License for the specific language governing                                         /
+// permissions and limitations under the License. See accompanying LICENSE file.                                                    /
+//                                                                                                                                  /
+// $Author:shawcs@yahoo-inc.com  $Date: 30-Jan-2012                                                                                 /
+//                                                                                                                                  /
+//+---------------------------------------------------------------------------------------------------------------------------------+
+-->
+<table width="100%">
+  <tr>
+    <td width="450">
+      <? if($pager->current_page == 1): ?>
+        <span style="color: Gray;">[first]</span>
+        <span style="color: Gray;">[prev]</span>
+      <? else: ?>
+        [<a href="<?php echo $this->page_url(1) ?>" title="go to the first page">first</a>]
+        [<a href="<?php echo $this->page_url($pager->current_page-1)?>" title="go to the previous page">prev</a>]
+      <? endif ?>
+      
+      <? if($pager->current_page == $pager->total_pages): ?>
+        <span style="color: Gray;">[next]</span>
+        <span style="color: Gray;">[last]</span>
+      <? else: ?>
+        [<a href="<?php echo $this->page_url($pager->current_page+1)?>" title="go to the next page">next</a>]
+        [<a href="<?php echo $this->page_url($pager->total_pages)?>" title="go to the last page">last</a>]
+      <? endif ?>
+      &#160;
+      <? $page_nums_list = Pager::range_window($pager->current_page, $pager->total_pages); ?>
+      <? if($page_nums_list[0] != 1): ?>...<? endif ?>
+      <? foreach($page_nums_list as $page_num): ?>
+        <? if($page_num == $pager->current_page): ?>
+        <b title="current page is <?php echo $page_num ?>" style="border: 1px solid Black; background: WhiteSmoke; padding: 1px 3px 1px 3px;"><?php echo $page_num ?></b>
+        <? else: ?>
+          <a href="<?php echo $this->page_url($page_num) ?>" title="go to page <?php echo $page_num?>"><b><?php echo $page_num?></b></a>
+        <? endif ?>
+      <? endforeach ?>
+      <? if($page_num != $pager->total_pages): ?>...<? endif ?>
+    </td>
+    <td width="90" title="total pages <?php echo $pager->total_pages?>"><b>Pages:</b> <?php echo $pager->total_pages?></td>
+    <td width="120" title="found <?php echo $pager->total?> records"><b>Records:</b> <?php echo $pager->total?></td>
+    <td align="right">
+      <nobr>
+        display
+        <select name="per_page" onchange="window.location = '<?php echo  $this->per_page_url() ?>&per_page=' + this.value">
+          <?
+            $per_page_list = array();
+            foreach(Pager::per_page_list() as $v)
+              $per_page_list[] = array($v, $v);
+          ?>
+          <?php echo  html::select_options($per_page_list, $pager->per_page) ?>
+        </select> per page
+      </nobr>
+    </td>
+  </tr>
+</table>
+

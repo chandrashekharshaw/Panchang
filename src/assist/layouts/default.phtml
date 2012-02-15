@@ -1,0 +1,200 @@
+<?php
+//+---------------------------------------------------------------------------------------------------------------------------------+
+//																    /
+// Copyright (c) 2011 Yahoo! Inc. All rights reserved. 										    /
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 				            /
+// file except in compliance with the License. You may obtain a copy of the License at 						    /
+//																    /
+//		http://www.apache.org/licenses/LICENSE-2.0 									    /
+//																    /
+// Unless required by applicable law or agreed to in writing, software distributed under 					    /
+// the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF    					    /
+// ANY KIND, either express or implied. See the License for the specific language governing 					    /
+// permissions and limitations under the License. See accompanying LICENSE file.						    /
+// 																    /
+// $Author:shawcs@yahoo-inc.com  $Date: 30-Jan-2012										    /
+//																    /
+//+---------------------------------------------------------------------------------------------------------------------------------+
+
+
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title> <?php echo $title ?></title>
+	<link href="css/panchang.css" rel="stylesheet" type="text/css" />
+	<link href="css/dashboard.css" rel="stylesheet" type="text/css" />
+	<link href="css/buttons.css" rel="stylesheet" type="text/css" />
+	<link href="css/toolbar.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="js/panchang.js"></script>
+       <script type="text/javascript" src="js/dynamic.js"></script>
+   
+<?php
+$settings = parse_ini_file('conf/setting.ini', true);
+if($this->showCal==1) {
+?>
+<link href="css/calendar/theme.css" rel="stylesheet" type="text/css" />
+<?php
+}
+if($this->showDS!=1) {
+?>
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/container/assets/skins/sam/container.css">
+	<link type="text/css" rel="stylesheet" href="http://yui.yahooapis.com/2.8.0r4/build/autocomplete/assets/skins/sam/autocomplete.css">
+    	<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/container/container-min.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/menu/menu-min.js"></script>
+   
+	<script type="text/javascript" src="js/helper/calendar.js"></script>
+	<script type="text/javascript" src="js/helper/calendar-en.js"></script>
+	<script type="text/javascript" src="js/helper/calendar-setup.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/animation/animation-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/dragdrop/dragdrop-min.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/datasource/datasource-min.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/get/get-min.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/connection/connection-min.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/autocomplete/autocomplete-min.js"></script>
+<?php
+} else {
+?>
+<style type="text/css">
+/*margin and padding on body element
+  can introduce errors in determining
+  element position and are not recommended;
+  we turn them off as a foundation for YUI
+  CSS treatments. */
+body {
+	margin:0;
+	padding:0;
+}
+</style>
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/container/assets/skins/sam/container.css">
+    	<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/container/container-min.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/menu/menu-min.js"></script>
+   
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/animation/animation-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/dragdrop/dragdrop-min.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/datasource/datasource-min.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/get/get-min.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/connection/connection-min.js"></script>
+        <script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/autocomplete/autocomplete-min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/datatable/assets/skins/sam/datatable.css" />
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/connection/connection-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/json/json-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/element/element-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/datatable/datatable-min.js"></script>
+<script type="text/javascript" src="js/stDashboard.js"></script>
+<?php
+}
+if($this->jsonParsing) {
+?>
+<script src="http://yui.yahooapis.com/2.8.1/build/yahoo/yahoo-min.js"></script>
+<script src="http://yui.yahooapis.com/2.8.1/build/json/json-min.js"></script>
+<?php
+}
+?>
+        <style type="text/css">
+             #myAutoComplete {
+              width:15em; /* set width here or else widget will expand to fit its container */
+              padding-bottom:2em;
+              }
+        </style>
+<?php 
+if($this->showTab==1) {
+?>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/tabview/assets/skins/sam/tabview.css">
+<script src="http://yui.yahooapis.com/2.8.1/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="http://yui.yahooapis.com/2.8.1/build/element/element-min.js"></script>
+<script src="http://yui.yahooapis.com/2.8.1/build/connection/connection-min.js"></script>
+<script src="http://yui.yahooapis.com/2.8.1/build/tabview/tabview-min.js"></script>
+<?php
+}
+?>
+
+  </head>
+  <body leftmargin="0" topmargin="0" rightmargin="0" marginwidth="0" marginheight="0"
+    onload="commonInit();<?php echo $this->onload ?>" onunload="<?php echo $this->unload ?>" class="yui-skin-sam">
+<div class="popper" id="popup" style="top:-1;left:-1;"></div>
+<!--    <div id="doc"> -->
+ 
+        <!-- LOGO -->
+<?php
+$auth = $_SESSION['auth'];
+if($this->hideheader != 1) {
+?>
+	<div style="background-color:#F025EC">
+          <table width="98%" border="0" cellpadding="2" cellspacing="0">
+            <tbody>
+              <tr>
+      		<td width="85%"><a href="index.php"><img src="./images/logo.png" alt="Y! Opensource Calendar" align="left" border=0 /></a></td>
+		<td width="15%" align="right">
+      		Welcome, <strong><?php echo $auth->username; ?></strong>
+        	[ <a href="log_out.php">Sign Out</a> ]<br />
+        	 <a href="mailto:<?php echo $settings['mail_group'] ?>?subject=[calendar] Feedback/Suggestions">Feedback/Suggestions</a> &nbsp;|&nbsp; <a href=<?php echo $settings['bug_url'] ?> target="_blank">Bugzilla</a>&nbsp;|&nbsp;<a href=<?php echo $settings['stats'] ?> target="_blank">Stats</a>&nbsp;
+        	<br />
+		</td>
+	       </tr>
+           </tbody>
+	  </table>
+<?php
+}
+?>
+        </div>
+        <!-- eo LOGO -->
+<?php
+if($this->hideheader != 1) {
+?>
+
+
+	<div style="background-color:#8B1089">
+          <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+              <tr><td>
+
+<?php  include 'views/shared/_navigation.phtml' ?>
+              </td></tr>
+	    </tbody>
+	  </table>
+	</div>
+	<?php
+}
+	if($this->addmenu) {
+	?>
+<script>YAHOO.util.Event.addListener(window,'load',cal_menu_init);</script>
+	<?php
+	}
+	?>
+      <!-- CONTENT -->
+      <div id="" style="clear:both;padding:0px 0px 0px 0px;">
+	<table border=0 cellspacing=0 cellpadding=0 width=100%><tr><Td>
+      <? include 'views/shared/_messages.phtml' ?>
+	</td></tr></table>
+      
+      <?php echo $this->layout_content ?>
+      </div>
+      <!-- eo CONTENT -->
+ <?php
+if($this->hideheader != 1) {
+?>
+     
+      <!-- FOOTER -->
+      <div id="ft">
+	<br>
+        <div class="margTop" style="border-top: 1px solid rgb(95, 95, 95); position: relative; padding-top: 5px;" align="center">
+          <small>Copyright &copy; 2012 <a href="http://www.yahoo.com">Yahoo!</a> Inc. All rights reserved. 
+	  </small>
+          <br />
+          <br />
+       </div>
+<?php
+}
+?>
+      </div>
+<script type="text/javascript" src="js/panchang.js"></script>
+<script type="text/javascript" src="js/util.js"></script>      
+      <!-- eo FOOTER -->
+  </body>
+</html>

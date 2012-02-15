@@ -1,0 +1,102 @@
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body, select, tr, td, input, textarea {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #000000;
+}
+
+.popper {
+  position: absolute;
+  visibility: hidden;
+  z-index: 999;
+}
+.text { color: #000000; }
+.text_grey { color: #CCCCCC; }
+.text_lightgrey { color: #999999; }
+.text_red { color: #FF3300; }
+.text_green { color: #009900; }
+.text_purple_bold {
+  color: #7B0099;
+  font-weight: bold;
+}
+
+.popper { position: absolute; visibility: hidden; }
+
+a.href_blue,
+a.href_blue:active,
+a.href_blue:visited {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #0000B2;
+  font-style:normal;
+  text-decoration: none;
+}
+a.href_blue:hover {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #0000B2;
+  font-style:normal;
+  text-decoration: underline;
+}
+
+a.href_blue_underlined,
+a.href_blue_underlined:active,
+a.href_blue_underlined:visited {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #0000B2;
+  font-style:normal;
+  text-decoration: underline;
+}
+a.href_blue_underlined:hover {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #0000B2;
+  font-style:normal;
+  text-decoration: none;
+}
+
+a.href_black,
+a.href_black:active,
+a.href_black:visited {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  font-style:normal;
+  text-decoration: none;
+}
+a.href_black:hover {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  font-style:normal;
+  text-decoration: underline;
+}
+
+.w_header,
+a.w_header,
+a.w_header:hover,
+a.w_header:active,
+a.w_header:visited {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: #FFFFFF;
+  font-style:normal;
+  text-decoration: none;
+}
+
+.href_notice,
+a.href_notice,
+a.href_notice:hover,
+a.href_notice:active,
+a.href_notice:visited {
+  font-family: Verdana,Arial,Helvetica,sans-serif;
+  font-size: 11px;
+  color: #FF3300;
+  font-style:normal;
+  text-decoration: none;
+}

@@ -1,0 +1,484 @@
+/* $Id: toolbar.css,v 1.14 2008-06-09 15:09:47 kvikas Exp $ */
+/* CSS Document */
+
+#prod-title {
+  font: bold 13pt Verdana;
+  color: Gray;
+}
+
+ #yopsnav
+	{
+		padding:0px 0px 0px 0px; 
+		clear:both;
+		width:750px;
+	}
+	
+	#yopsnav ul
+	{
+		margin:0px 0px 0px 0px;
+		padding:0px 0px 0px 4px;
+		list-style:none;
+		height:20px;
+	}	
+	
+	#yopsnav ul li
+	{
+		display:block;
+		float:left;
+		background:url(../images/tab-left-off_purple.gif) top left no-repeat;
+		padding:0px 0px 0px 3px;
+		margin:0px 2px 0px 0px;
+		
+	}
+
+	#yopsnav ul li a
+	{
+		display:block;
+		float:left;
+		font:10px Verdana;
+		font-weight:bold;
+		color:#434343;
+		white-space:nowrap;
+		background:url(../images/tab-right-off-wide_purple.gif) top right;
+		padding:4px 6px 4px 6px;
+		margin:0px 0px 0px 0px;
+		text-decoration:none;
+	
+	}
+	
+	#yopsnav ul li.selected
+	{
+		background:url(../images/tab-left-on_purple.gif) top left no-repeat;		
+		padding-left: 3px;
+	}
+
+	#yopsnav ul li.selected a
+	{
+		color:#FFFFFF;
+		text-decoration:none;
+		background:url(../images/tab-right-on-wide_purple.gif) top right;
+		background-repeat:repeat-x;
+		
+	}
+	
+	#yopsnav a:hover
+	{
+		text-decoration:underline;
+	} 
+	
+	/* SUB NAV SECTION */	
+	#yopssubnav
+	{
+		padding:0px 0px 0px 0px;
+		clear:both;
+		float:left;
+		width:100%;
+		margin:0px 0px 0px 0px;
+	}
+
+	#yopssubnav ul
+	{
+		padding:0px 0px 0px 0px;
+		margin:0px 0px 0px 0px;
+		float:left;
+		list-style:none;
+		background:url(../images/tab-subnav-background_purple.gif);
+		width:100%;
+	}
+
+	#yopssubnav ul li  
+	{
+		float:left;
+		display:block;
+		font:10px Verdana;
+		height:25px;
+		margin:0px 0px 0px 0px;
+		padding:0px 0px 0px 0px;
+		background:url(../images/tab-subnav-separator_purple.gif) right no-repeat;		
+	}
+
+
+	#yopssubnav ul li  a
+	{
+		float:left;
+		color:#FFFFFF;
+		font:10px Verdana;
+		white-space:nowrap;
+		text-decoration:none;
+		margin:5px 0px 0px 0px; 
+		padding:0px 9px 0px 9px;
+	}
+
+	#yopssubnav ul li.selected a
+	{
+		font:10px Verdana;
+		font-weight:bold;
+	}
+
+	#yopssubnav a:hover
+	{
+		text-decoration:underline;
+	} 
+
+/* Get Quotes section*/
+
+	#yopssearch
+	{
+		clear:both;
+		float:left;
+		margin:0px 0px 0px 0px;
+		padding:0px 0px 0px 0px;
+		width:100%;
+		height:27px;
+		background:url(../images/tab-quotebar_purple.gif);
+	}
+	
+	#yopssearch ul
+	{
+		margin:0px 0px 0px 0px;
+		list-style:none;
+		width:100%;
+		padding:2px 0px 0px 0px;
+		float:left;
+		background:url(../images/tab-quotebar_purple.gif);
+	}
+
+	#yopssearch ul li
+	{
+		float:left;
+		display:block;
+		font:11px Verdana;
+		font-weight:bold;
+		height:27px;
+		margin:0px 0px 0px 5px;
+	}
+	
+	#yopssearch ul li label
+	{
+		float:left;
+		font:11px Verdana;
+		font-weight:bold;
+		color:#023165;
+		margin-left:130px; 
+		margin-top:6px;
+		margin-right:0px;
+	}	
+
+	#yopssearch ul li input.button
+	{
+		float:left;
+		font:10px Verdana;
+		font-weight:normal;
+		padding:0px 0px 0px 0px;
+		font-weight:bold;
+		margin: 4px 0px 0px 0px;
+	}	
+
+	#yopssearch ul li input.text
+	{
+		float:left;
+		font:10px Verdana;
+		font-weight:normal;
+		padding:0px 0px 0px 0px;
+		margin: 5px 0px 0px 0px;
+	}	
+
+	#yopssearch ul li.first a
+	{
+		float:left;
+		font:10px Verdana;
+		font-weight:normal;
+		color:#333333;
+		border-left:none;
+		margin:7px 0px 0px 0px;
+		padding:0px 0px 0px 0px;
+		
+	}	
+
+	#yopssearch ul li a
+	{
+		float:left;
+		font:10px Verdana;
+		font-weight:normal;
+		color:#333333;
+		border-left:1px double #000000;
+		margin:7px 0px 0px 0px;
+		padding:0px 0px 0px 7px;
+		text-decoration: none;
+	}	
+
+	#yopssearch a:hover
+	{
+		text-decoration:underline;
+	}
+	
+	
+	
+  tr.yopsnavcontext
+	{
+    background:url(../images/tab_context.gif) top right;
+		height:25px;
+		width:138px;
+	}
+
+ td.yopsnavcontext
+	{
+
+	}
+	a.yopsnavcontext
+	{
+		font:10px Verdana;
+		color:#434343;
+		text-decoration:none;
+	}
+
+	
+	tr.yopsnavcontexthead
+	{
+    background:url(../images/tab_context_head.gif) top right;
+		height:25px;
+		
+	}
+
+ td.yopsnavcontexthead
+	{
+		background:url(../images/tab_context_head.gif) top left no-repeat;	
+		height:25px;	
+	}
+	a.yopsnavcontexthead
+	{
+		font:10px Verdana;
+		font-weight:bold;
+		color:#000;
+		text-decoration:none;
+	}
+	
+	tr.yopsnavcontextfoot
+	{
+    background:url(../images/tab_context_bottom.gif) top right;
+		height:2px;
+		
+	}
+ td.yopsnavcontext
+	{
+		font:9px Verdana;
+		font-weight:normal;
+		color:#000;
+	}
+
+ td.yopsnavcontextfoot
+	{
+		background:url(../images/tab_context_bottom.gif) top left no-repeat;	
+		height:2px;	
+	}
+
+/* Menu & MenuBar styles */
+
+.yuimenu {
+
+    background-color:#E1DAF6;
+    border:solid 1px #c4c4be;
+    padding:1px;
+    
+}
+
+
+.yuimenu.show-scrollbars {
+
+	overflow: visible; 
+
+}
+
+.yui-menu-shadow {
+
+    display: none;
+
+}
+
+
+.yuimenu .yuimenu,
+.yuimenubar .yuimenu {
+
+    position:absolute;
+    visibility:hidden;
+
+}
+
+.yuimenubar {
+    background:url(../images/tab-subnav-background_purple.gif);
+}
+
+.yuimenubar ul {
+    *zoom:1;
+}
+
+.yuimenubar ul:after {
+
+    content:".";
+    display:block;
+    clear:both;
+    visibility:hidden;
+    height:0;
+    line-height:0;
+
+}
+
+.yuimenubar ul {
+
+    margin:0;
+    padding:3px 0px;
+
+}
+
+.yuimenu ul {
+
+    border:solid 1px #c4c4be;
+    border-width:1px 0 0 0;
+    margin:0;
+    padding:10px 0;
+
+}
+
+.yuimenu ul.first-of-type, 
+.yuimenu ul.hastitle,
+.yuimenu h6.first-of-type {
+
+    border-width:0;
+
+}
+
+.yuimenubar li, 
+.yuimenu li {
+
+    list-style-type: none;    
+
+}
+/* MenuItem and MenuBarItem styles */
+
+.yuimenubaritem {
+    float:left;
+}
+
+.yuimenubaritem a:visited {
+    color:#fff;
+    text-decoration:none;
+}
+
+.yuimenuitem a:visited {
+    color:#000;
+    text-decoration:none;
+}
+
+.yuimenuitemlabel {
+    white-space: nowrap;
+    font-size:85%;
+    display:block;
+    color:#000;
+    text-decoration:none;
+
+}
+
+.yuimenubaritemlabel {
+
+    white-space: nowrap;
+    font-size:85%;
+    display:block;
+    color:#fff;
+    text-decoration:none;
+
+}
+.yuimenuitemlabel {
+
+    padding:2px 15px;
+    outline:none;
+    
+}
+
+.yuimenubaritemlabel {
+
+    border-width:0 0 0 1px;
+    border-style:solid;
+    border-color:#c4c4be;
+    padding:4px 4px;
+
+}
+
+li.first-of-type .yuimenubaritemlabel {
+    border-width:0;
+}
+
+.yuimenuitemlabel .submenuindicator,
+.yuimenuitemlabel .checkedindicator, 
+.yuimenubaritemlabel .submenuindicator {
+    
+    display:block;
+    height:8px;
+    width:8px;
+    overflow:hidden;
+    vertical-align:middle;
+    text-indent:9px;
+    background-image:url(../images/map.gif);
+    background-repeat:no-repeat;
+
+}
+
+.yuimenubaritemlabel .submenuindicator {
+
+    display:-moz-inline-stack; /* Gecko */
+    display:inline-block; /* IE, Opera and Safari */
+    font:0/0 arial; /* Gecko */
+
+}
+
+.yuimenuitemlabel .submenuindicator {
+
+    background-position:0 0;
+
+}
+
+.yuimenubaritemlabel .submenuindicator {
+
+    background-position:0 -32px;
+    margin:0 0 0 10px;
+
+}
+
+/* Matches selected menu items */
+
+.yuimenuitem a.selected
+{
+
+    background-color:#8c8ad0;
+    text-decoration:underline;
+    color:#fff;
+
+}
+
+.yuimenubaritem a.selected
+{
+
+    text-decoration:underline;
+    color:#fff;
+
+}
+
+
+.yuimenubaritem a.selected .submenuindicator {
+
+    background-position:0 -32px;
+
+}
+
+.yuimenuitem a.selected .submenuindicator {
+
+    background-position:0 -8px;
+
+}
+
+#searchbar label {
+  font-weight: bold;
+  color: Gray;
+}
+#searchbar {
+  padding-top: 2px;
+}

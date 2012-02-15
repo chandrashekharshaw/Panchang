@@ -1,0 +1,59 @@
+
+ul.button, ul.buttonDisabled
+{
+    margin:0px 0px 0px 0px;
+    padding:0px 0px 0px 4px;
+    list-style:none;
+    height:22px;
+}
+   
+    li.button
+    {
+        display:block;
+        float:left;
+        background:url(../images/buttons/button_left.gif) top left no-repeat;
+        padding:0px 0px 0px 3px;
+        margin:0px 5px 0px 0px;
+       
+    }
+
+    li.buttonDisabled
+    {
+        display:block;
+        float:left;
+        background:url(../images/buttons/button_left_off.gif) top left no-repeat;
+        padding:0px 0px 0px 3px;
+        margin:0px 5px 0px 0px;
+       
+    }
+
+    a.button,a.button:hover,a.button:active,a.button:visited
+    {
+        display:block;
+        float:left;
+        font:10px Verdana;
+        font-weight:bold;
+        color:#000000;
+        white-space:nowrap;
+        background:url(../images/buttons/button_right_wide.gif) top right;
+        padding:4px 6px 4px 6px;
+        margin:0px 0px 0px 0px;
+        text-decoration:none;
+        height:15px;
+   
+    }
+
+    div.buttonDisabled
+    {
+        display:block;
+        float:left;
+        font:10px Verdana;
+        font-weight:bold;
+        color:#999999;
+        white-space:nowrap;
+        background:url(../images/buttons/button_right_off_wide.gif) top right;
+        padding:4px 6px 4px 6px;
+        margin:0px 0px 0px 0px;
+        text-decoration:none;
+        height:15px;
+    }

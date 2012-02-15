@@ -1,0 +1,285 @@
+<?php
+//+---------------------------------------------------------------------------------------------------------------------------------+
+//																    /
+// Copyright (c) 2012 Yahoo! Inc. All rights reserved. 										    /
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 				            /
+// file except in compliance with the License. You may obtain a copy of the License at 						    /
+//																    /
+//		http://www.apache.org/licenses/LICENSE-2.0 									    /
+//																    /
+// Unless required by applicable law or agreed to in writing, software distributed under 					    /
+// the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF    					    /
+// ANY KIND, either express or implied. See the License for the specific language governing 					    /
+// permissions and limitations under the License. See accompanying LICENSE file.						    /
+// 																    /
+// $Author:shawcs@yahoo-inc.com  $Date: 30-Jan-2012										    /
+//																    /
+//+---------------------------------------------------------------------------------------------------------------------------------+
+
+class PageProperties {
+
+  /**
+   * _toolbar - The toolbar array, containing all the sub tabs too
+   * @access private
+   * @var array (x3)
+   */
+  var $_toolbar;
+  /**
+   * _js - Array that contains all the JS file names to be included in this file
+   * @access private
+   * @var array
+   */
+  var $_js;
+  
+  /**
+   * _css - Array that contains all the CSS file names to be included in this file.
+   * @access private
+   * @var array 
+   */
+  var $_css;
+  
+  // {{{ PageProperties()
+  /** +-------------------------------------------------------------------------+
+   *  | PageProperties(): constructor. Inits class variables.                   |
+   *  +-------------------------------------------------------------------------+
+   */
+  function PageProperties($pageTitle = '',$auth=null) {
+    if($auth==NULL) {
+    	$auth = $_SESSION['auth'];
+    }
+    $settings=parse_ini_file('conf/setting.ini', true);
+    $dbh = Connection::cal_ro();
+    $obj = new calendarConfig();
+    $this->_isTeammanager = $obj->isMember($auth->username, $dbh, $settings['manager_group']);
+    $this->_mailGroup = $settings['mail_group'];
+    $this->_bugURL = $settings['bug_url'];
+    $this->_stats = $settings['bug_url'];
+    $this->_byUser = $auth->username; 
+    $this->_pageTitle = $pageTitle;
+    $this->_team = "Calendar";
+    $this->_css = array (
+                    'css/panchang.css',
+                    'css/buttons.css',
+                    'css/toolbar.css'
+                  );
+    
+    $this->_js = array (
+      'js/panchang.js',
+      'js/util.js'
+    );
+    
+    if($this->_isTeammanager){
+	$this->_toolbar = array(
+        // Home Tab
+        array (
+          'name'     => 'Oncall Calendar',
+          'link'     => 'calendar.php',
+          'tooltip' => 'Calendar',
+          'prefix'  => 'calendar_',
+          'mouseon'  => '',
+          'mouseoff'=> '',
+        ),
+        
+	array (
+          'name'     => 'Admin Section',
+          'link'     => 'team_mgmt.php',
+          'tooltip' => 'Admin',
+          'prefix'  => 'admin_',
+          'mouseon'  => '',
+          'mouseoff'=> '',
+        )
+        
+      );
+    }	 // End main toolbar array
+    else{
+	$this->_toolbar = array(
+        // Home Tab
+        array (
+          'name'     => 'Oncall Calendar',
+          'link'     => 'calendar.php',
+          'tooltip' => 'Calendar',
+          'prefix'  => 'calendar_',
+          'mouseon'  => '',
+          'mouseoff'=> '',
+        )
+	);
+
+
+  }
+}
+  // }}} end of __construct
+  
+  // +-------------------------------------------------------------------------+
+  // | pritnToolbar() Prints the HTML for the toolbar including the logo       |
+  // +-------------------------------------------------------------------------+
+  function printToolbar($showLogo=true,$smenu='',$action=''){
+    // Print the table container and the div tag for the main tabs
+?>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td><div id="yopsnav">
+          <ul><?php
+    
+    $self = getenv("PHP_SELF");
+    foreach ($this->_toolbar as $tab){
+      if( !is_null($tab) ) {
+        if(@strpos($self,$tab["prefix"]) || ($smenu!='' && strlen(strstr($tab["prefix"],$smenu)))){
+          $selected = $tab;
+          echo "\n          ".$this->getTabHtml($tab, "selected",$action);
+        } else {
+        
+          echo "\n          ".$this->getTabHtml($tab);
+        }
+      }
+    }
+    ?>
+        </ul>
+        </div>
+    <?php
+    if($smenu == 'sservice') {
+    	$this->printDropTabs($selected);
+    } 
+    //$this->getSearchBar();
+    
+    // Print the end of the table container
+    ?>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- End Toolbar -->
+    <?php
+  }
+    
+  // +-------------------------------------------------------------------------+
+  // | PageProperties(): constructor. Inits class variables.                   |
+  // +-------------------------------------------------------------------------+
+  function addToHeader($filetype, $path){
+    if($filetype == "js"){
+      array_push($this->_js, $path);
+    } else if($filetype == "css"){
+      array_push($this->_css, $path);
+    } else {
+      
+    }
+  }
+  
+  // +-------------------------------------------------------------------------+
+  // | public printHeader(): Prints the header, including the JS and CSS file
+  // |   includes, sets onload JS function.
+  // |   @param string - onload JS function name if any
+  // +-------------------------------------------------------------------------+
+  function printHeader($onload = "", $unload = "", $classname = ""){
+    if (stristr(getenv("HTTP_USER_AGENT"), "MSIE") === false) {
+    ?><html><?
+    } else {
+    ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <?php
+    }
+    ?>
+    <head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title><?php echo  _pageTitle." -- ".$this->_pageTitle ?></title><?
+    foreach($this->_css as $css){
+      echo "<link href=\"$css\" rel=\"stylesheet\" type=\"text/css\" />\n";
+    }
+    foreach($this->_js as $js){
+      echo "<script type=\"text/javascript\" src=\"$js\"></script>\n";
+    }
+    ?>
+  </head>
+    <body class="yui-skin-sam" leftmargin="0" topmargin="0" rightmargin="0" marginwidth="0" marginheight="0" 
+    onload="commonInit();<?php echo  $onload ?>" onunload="<?php echo  $unload ?>" class="<?php echo $classname?>"><div class="popper" id="popup" style="top:-1;left:-1;"></div><?
+  }
+  
+  
+  
+  
+  function printDropTabs($tab){
+	$subtab = $tab['submenu'];
+	$str_subtab="<div id='tab_service' class='yuimenubar'style='width:100%;position:static;'>";
+	$str_subtab.="<div class='bd'>";
+	$str_subtab.="<ul class='first-of-type'>";
+        foreach($subtab as $item) {
+	$str_subtab.="<li class='yuimenubaritem'>";
+	$str_subtab.="<a class='yuimenubaritemlabel'>".$item[name]."</a>";
+	$subdroptab = $item['submenu'];
+	$str_subtab.="<div id='' class='yuimenu'>";
+	$str_subtab.="<div class=bd><ul class='first-of-type'>";
+	foreach($subdroptab as $subitem) {
+	$str_subtab.="<li class='yuimenuitem'><a class='yuimenuitemlabel' href='".$subitem[link]."' >".$subitem[name]."</a>";
+	}
+	$str_subtab.="</ul></div></div></li>";
+	}
+	$str_subtab.="</ul></div></div>";
+	print $str_subtab;
+	?>
+	<script language='javascript'>
+	function cal_menu_init(p_oEvent) {
+          // Instantiate and render the menu bar
+         var oMenuBar = new YAHOO.widget.MenuBar("tab_service", { autosubmenudisplay:true, showdelay:250, hidedelay:750, lazyload:true });
+         oMenuBar.render();
+     }	
+</script>
+	<?php
+  }
+
+
+  
+  // }}}
+  
+  // {{{ getTabHtml()
+  // +-------------------------------------------------------------------------+
+  // | getTabHtml() returns the HTML code for the given tab                    |
+  // +-------------------------------------------------------------------------+
+  function getTabHtml($tab, $selected = "",$action=''){
+    // highlight current subtab depending on URL
+    if ($selected == '' && strlen(trim($tab[link])) > 0) {
+      if (strpos(getenv('PHP_SELF'), $tab['link'])) {
+        $selected = 'selected';
+      }
+    }
+
+    return "<li class=\"$selected\">" . (strlen(trim($tab[link])) ? "<a href=\"{$tab['link']}\" " . $this->getAttList($tab) . ">{$tab['name']}</a>" : "<a style=\"text-decoration:none\" title=\"{$tab['tooltip']}\">{$tab['name']}</a>") . (strlen(trim($tab['new'])) ? "<img alt=\"NEW\" src=\"images/icons/icon_new.gif\">" : "") . "</li>";
+  }
+  // }}}
+  
+  // {{{ getAttList()
+  /**
+   * Adds <A> attributes based on $this->_toolbar structure
+   * Attributes understood as of now:
+   *  - target  : target="$v"
+   *  - tooltip : title="$v"
+   *
+   * @param   array     tab/subtab/contextmenu
+   * @return  string    attribute(s) 'name1=value1 name2=value2 ...' list
+   */
+  function getAttList($tab) {
+    $attList = '';
+
+    foreach ($tab as $k => $v) {
+      if (strlen(trim($v)) > 0) {
+        switch ($k) {
+          case 'target':
+            $attList .= " $k=\"$v\"";
+            
+            break;
+
+          case 'tooltip':
+            $attList .= " title=\"$v\"";
+            
+            break;
+        }
+      }
+    }
+
+    return trim($attList);
+  }
+  // }}}
+
+  
+
+  
+}
+?>

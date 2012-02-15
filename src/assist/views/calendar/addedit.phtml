@@ -1,0 +1,78 @@
+<!--
+//+---------------------------------------------------------------------------------------------------------------------------------+
+//                                                                                                                                  /
+// Copyright (c) 2012 Yahoo! Inc. All rights reserved.                                                                              /
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this                                             /
+// file except in compliance with the License. You may obtain a copy of the License at                                              /
+//                                                                                                                                  /
+//              http://www.apache.org/licenses/LICENSE-2.0                                                                          /
+//                                                                                                                                  /
+// Unless required by applicable law or agreed to in writing, software distributed under                                            /
+// the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF                                              /
+// ANY KIND, either express or implied. See the License for the specific language governing                                         /
+// permissions and limitations under the License. See accompanying LICENSE file.                                                    /
+//                                                                                                                                  /
+// $Author:shawcs@yahoo-inc.com  $Date: 30-Jan-2012                                                                                 /
+//                                                                                                                                  /
+//+---------------------------------------------------------------------------------------------------------------------------------+
+-->
+<style>
+tr.hide        { visibility: hidden; display: none; }
+tr.show        { visibility: visible; display: table-row; }
+.panel .hd {
+   background-color:#e5e5e5;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-size: 11px;
+   font-style:normal;
+   color: #7B0099;
+   font-weight: bold;
+}
+</style>
+<form name='assignment' method=POST>
+<input type=hidden id=lockid name=lockid value="<?php echo $this->lockid?>">
+<input type="hidden" name="crumb" id="crumb" value="<?php echo getenv(".bycrumb")?>" />
+<table cellspacing=0 cellpadding=0 border=0 width=962>
+<tr>
+  <td><span class="title"><?php echo $this->pagetitle?></span></td>
+</tr>
+<tr><td>
+<table>
+<tr><td>&nbsp;</td></tr>
+<?php  
+if(!$this->edituser) {
+?>
+<tr class='result_true'><td><font class='text_blue'><?php echo $this->help?></font></td></tr>
+<tr>
+<td>Pls provide details in above format:</td>
+</tr>
+<tr>
+</tr>
+<tr><td>
+<textarea rows=22 cols=75 name='oncall' id='oncall'>
+<?php echo $oncall?>
+</textarea>
+</td></tr>
+<tr><td><hr></td></tr>
+<tr><td align=right>
+<input type='submit' name='btnSubmit' id='btnSubmit' value='Submit'>&nbsp;&nbsp;
+<input type='button' name='btnReset' id='btnReset' value='Reset' onClick='window.location=window.location'>
+</td></tr>
+<?php 
+} else {
+?>
+<tr class='resultGeneric'><td>
+<table cellspacing=0 clellpadding=0 border=0>
+<thead><tr height=20><td>Attention!</td></tr></thead>
+<tr class=''><td>
+<table cellspacing=1 clellpadding=1 border=0>
+<tr><td><font class='text_red'><?php echo $this->edituser?>&nbsp; is editing <?php echo $this->calendar_type?></font></td></tr>
+<tr><td><font class='text_red'><?php echo $this->edituser?>&nbsp;has been editing the topic for <?php echo $this->usage?>  and the lease is still active for another <?php echo $this->duration?></font></td></tr>
+</table>
+</td></tr>
+</table>
+</td></tr>
+<?php } 
+?>
+</table></td></tr>
+</table>
+</form>

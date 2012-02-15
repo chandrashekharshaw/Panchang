@@ -1,0 +1,209 @@
+<!--
+//+---------------------------------------------------------------------------------------------------------------------------------+
+//                                                                                                                                  /
+// Copyright (c) 2012 Yahoo! Inc. All rights reserved.                                                                              /
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this                                             /
+// file except in compliance with the License. You may obtain a copy of the License at                                              /
+//                                                                                                                                  /
+//              http://www.apache.org/licenses/LICENSE-2.0                                                                          /
+//                                                                                                                                  /
+// Unless required by applicable law or agreed to in writing, software distributed under                                            /
+// the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF                                              /
+// ANY KIND, either express or implied. See the License for the specific language governing                                         /
+// permissions and limitations under the License. See accompanying LICENSE file.                                                    /
+//                                                                                                                                  /
+// $Author:shawcs@yahoo-inc.com  $Date: 30-Jan-2012                                                                                 /
+//                                                                                                                                  /
+//+---------------------------------------------------------------------------------------------------------------------------------+
+-->
+<script type="text/javascript">
+window.onload = function() {
+        setEMAutoComplete();
+}
+
+function setEMAutoComplete() {
+        var ds1 = new YAHOO.util.XHRDataSource("srv_UIHelper.php");
+        ds1.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
+        ds1.responseSchema = {
+resultsList: "Result",
+             fields: ["name","email","fullname","type"]
+        };
+
+        var ac_cc1 = new YAHOO.widget.AutoComplete("escalation_manager","ac_escalation_manager_cont", ds1);
+        ac_cc1.generateRequest = function(sQuery) {
+                return "?type=em&query=" + sQuery;
+        }
+        ac_cc1.delimChar = "";
+        ac_cc1.queryDelay = 0.3; 
+        ac_cc1.useIFrame= true; 
+        ac_cc1.resultTypeList = false; 
+	ac_cc1.maxResultsDisplayed = 2;
+        ac_cc1.formatResult = function(oResultItem, sQuery) {
+                var name = oResultItem.name;
+                var email = oResultItem.email;
+                var fullname = oResultItem.fullname;
+                var type= oResultItem.type;
+                var sMarkup = "<div style='clear:both;height:60px;'><div style='float:left;height:60px'><img src='http://us.i1.yimg.com/us.yimg.com/i/us/nt/ic/ylink/y.gif' alt='Ilist'> </div><div style'float:right'>&nbsp; "+ email +"<br><br> &nbsp;&nbsp; <b>(" + fullname + " mailing list)</b></div></div>";     
+                
+
+                return (sMarkup);
+        };
+}
+
+</script>
+
+
+<table cellspacing=0 cellpadding=0 border=0 width=100%>
+<tr>
+  <td><span class="title"><?php echo $this->time['timezone']?>-<?php echo $this->pagetitle?></span></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td width=100%>
+<form name='assignment' action='./calendar.php?action=<?php echo $this->action?>' method=POST>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<input type='hidden' id='aid' name='aid' value="<?php echo $this->time[assigneetime_id]?>">
+<input type="hidden" name="crumb" id="crumb" value="<?php echo getenv(".bycrumb")?>" />
+<!-- <tr>
+ <td valign=top>
+   <a href="javascript:void(0);" onmouseout="off();" onmouseover="pop('Timezone');">
+   <img src="images/icons/icon_info.gif" border="0" width="15" height="16" />
+   </a>
+ </td>
+ <td width="10">&nbsp;</td>
+ <td align="left" width="80" nowrap="nowrap" valign=top>Timezone</td>
+<td>&nbsp;</td>
+<td><?php echo $this->time['timezone']?></td>
+</tr>
+-->
+<?php
+ $from_time = $this->time[start_time];
+ $arr_time = explode(":",$from_time);
+?>
+<tr height=20><td colspan=4></td></tr>
+ <tr>
+ <td>
+   <a href="javascript:void(0);" onmouseout="off();" onmouseover="pop('From time');">
+   <img src="images/icons/icon_info.gif" border="0" width="15" height="16" />
+   </a>
+ </td>
+ <td width="10">&nbsp;</td>
+ <td align="left" width="80" nowrap="nowrap" valign=top>Start time</td>
+<td>&nbsp;</td>
+<td>
+<select id='from_hh' name='from_hh' style='width:60px'>
+<option value=''>&lt;-hh-&gt;</option>
+<?php
+for($int_i=0;$int_i<24;$int_i++) {
+$selected = ($int_i==$arr_time[0])?' selected':'';
+$label = ($int_i<10)?("0".$int_i):$int_i;
+?>
+<option value='<?php echo $int_i?>' <?php echo $selected?>><?php echo $label?></option>
+<?php
+}
+?>
+</select>
+&nbsp;
+<select id='from_mm' name='from_mm' style='width:60px'>
+<option value=''>&lt;-mm-&gt;</option>
+<?php
+for($int_i=0;$int_i<60;$int_i++) {
+$selected = ($int_i==$arr_time[1])?' selected':'';
+$label = ($int_i<10)?("0".$int_i):$int_i;
+?>
+<option value='<?php echo $int_i?>' <?php echo $selected?>><?php echo $label?></option>
+<?php
+}
+?>
+</select>
+&nbsp;[PST]
+</td>
+</tr>
+<?php
+ $to_time = $this->time[end_time];
+ $arr_time = explode(":",$to_time);
+?>
+
+<tr><td>&nbsp;</td></tr>
+<tr height=20><td colspan=4></td></tr>
+ <tr>
+ <td>
+   <a href="javascript:void(0);" onmouseout="off();" onmouseover="pop('End time');">
+   <img src="images/icons/icon_info.gif" border="0" width="15" height="16" />
+   </a>
+ </td>
+ <td width="10">&nbsp;</td>
+ <td align="left" width="80" nowrap="nowrap" valign=top>End time</td>
+<td>&nbsp;</td>
+<td>
+<select id='end_hh' name='end_hh' style='width:60px'>
+<option value=''>&lt;-hh-&gt;</option>
+<?php
+for($int_i=0;$int_i<24;$int_i++) {
+$selected = ($int_i==$arr_time[0])?' selected':'';
+$label = ($int_i<10)?("0".$int_i):$int_i;
+?>
+<option value='<?php echo $int_i?>' <?php echo $selected?>><?php echo $label?></option>
+<?php
+}
+?>
+</select>
+&nbsp;
+<select id='end_mm' name='end_mm' style='width:60px'>
+<option value=''>&lt;-mm-&gt;</option>
+<?php
+for($int_i=0;$int_i<60;$int_i++) {
+$selected = ($int_i==$arr_time[1])?' selected':'';
+$label = ($int_i<10)?("0".$int_i):$int_i;
+?>
+<option value='<?php echo $int_i?>' <?php echo $selected?>><?php echo $label?></option>
+<?php
+}
+?>
+</select>
+&nbsp;[PST]
+</td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+
+<?php
+if($this->action == 'stupdateTime') {
+  $escalation_manager = $this->time[escalation_manager];
+?>
+<tr><td>&nbsp;</td></tr>
+<tr height=10><td colspan=4></td></tr>
+ <tr>
+ <td>
+   <a href="javascript:void(0);" onmouseout="off();" onmouseover="pop('Escalation Manager');">
+   <img src="images/icons/icon_info.gif" border="0" width="15" height="16" />
+   </a>
+ </td>
+ <td width="10">&nbsp;</td>
+ <td align="left" width="80"  valign=top>Escalation Manager</td>
+<td>&nbsp;</td>
+<td>
+<div id="ac_escalation_manager">
+<input type='text' autocomplete="off" class="yui-ac-input" name='escalation_manager' id='escalation_manager' value='<?php echo $escalation_manager?>' style='width:60px'>
+<div id="ac_escalation_manager_cont" style="width:100%"></div>
+</div>
+&nbsp;
+</td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<?php
+}
+?>
+
+<tr><td colspan=5>&nbsp;</td></tR>
+<tr><td colspan=5>
+<input type='submit' name='btnSubmit' id='btnSubmit' value='Submit'>&nbsp;&nbsp;
+<input type='submit' name='btnReset' id='btnReset' value='Reset'>
+</td></tr>
+
+</table></td>
+</tr>
+</table>
+</form>
+</td></tr>
+</table>
+
+
