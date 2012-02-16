@@ -25,7 +25,7 @@
 	<link href="css/buttons.css" rel="stylesheet" type="text/css" />
 	<link href="css/toolbar.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="js/panchang.js"></script>
-	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/helper/jquery.js"></script>
         <script type="text/javascript" src="js/dynamic.js"></script>
    
 	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/container/assets/skins/sam/container.css">
